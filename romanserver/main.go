@@ -11,11 +11,13 @@ import (
 	"time"
 )
 
+const version = "v1.2"
+
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		urlPathElements := strings.Split(r.URL.Path, "/")
 		// If request is GET with correct syntax
-		if urlPathElements[1] == "roman_number" {
+		if urlPathElements[1] == "roman" {
 			number, _ := strconv.Atoi(strings.TrimSpace(urlPathElements[2]))
 			if number == 0 || number > 10 {
 				w.WriteHeader(http.StatusNotFound)
@@ -23,6 +25,8 @@ func main() {
 			} else {
 				fmt.Fprintf(w, "Roman numeral for %d is %q\n", number, html.EscapeString(romanNumerals.Numerals[number]))
 			}
+		} else if urlPathElements[1] == "version" {
+			fmt.Fprintf(w, "Roman numbers converter %s\n", version)
 		} else {
 			// For all other requests, tell that Client sent a bad request
 			w.WriteHeader(http.StatusBadRequest)
