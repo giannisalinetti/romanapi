@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gbs/romanapi/romanNumerals"
 	"html"
+	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -36,5 +37,11 @@ func main() {
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	s.ListenAndServe()
+	// Printing logs on standard output is ideal for a containerized environment
+	log.Printf("Listening on port %s", s.Addr)
+
+	err := s.ListenAndServe()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
