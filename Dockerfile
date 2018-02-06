@@ -1,4 +1,5 @@
 FROM centos:7
+MAINTAINER Gianni Salinetti <gbsalinetti@extraordy.com>
 
 RUN yum install -y golang && yum clean all -y
 RUN useradd roman
@@ -6,6 +7,7 @@ USER roman
 
 RUN mkdir -p /home/roman/go/{src,pkg,bin}
 ENV GOPATH=/home/roman/go
+ENV PATH=$PATH:$GOPATH
 RUN mkdir -p $GOPATH/src/github.com/gbs/romanapi
 
 ADD romanserver $GOPATH/src/github.com/gbs/romanapi/romanserver
